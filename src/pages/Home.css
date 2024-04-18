@@ -1,0 +1,35 @@
+.hero-image{
+    display: flex;
+    justify-content: center;
+}
+
+.mainName{
+    margin-bottom: 20px;
+}
+
+.grpButton{
+    margin-top: 25px;
+
+}
+.grpButton a {
+    margin-right: 20px; 
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease; /* Add transition for smooth sliding effect */
+}
+
+.card {
+    margin-top: 30px;
+  flex: 0 0 auto; /* Prevent flex items from shrinking */
+  margin-right: 10px; /* Adjust the spacing between images */
+  cursor: pointer;
+  margin-bottom: 30px
+}
+
+.forMore{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}

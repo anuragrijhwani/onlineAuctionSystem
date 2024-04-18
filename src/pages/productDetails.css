@@ -1,0 +1,128 @@
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.images-column {
+    /* border: 1px solid white; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.thumbnail {
+    border: 1px solid white;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.selected-image-column {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.selected-image {
+    width: 350px;
+    height: 300px;
+}
+
+.product-details-column {
+    flex: 1;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-details-column h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    font-family: Tahoma ;
+}
+
+.price {
+    margin-top: 15px;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+
+h1{
+    display: flex;
+    justify-content: center;
+    font-family: Georgia;
+}
+h3{
+    font-size: 20px;
+    font-family: Georgia;
+}
+
+.description{
+    margin-top: 20px;
+}
+.bidData{
+    margin-top: 20px;
+    display: flex;
+    color:turquoise;
+    justify-content: center;
+    border: 2px solid whitesmoke;
+}
+
+.edit{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+.delete{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+/* productDetails.css */
+
+/* Define styles for countdown clock */
+.clock-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .clock-digit {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  /* Define animation for changing digits */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  

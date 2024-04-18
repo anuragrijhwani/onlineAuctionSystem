@@ -1,0 +1,86 @@
+.section-product {
+    padding: 0 3.2rem;
+  
+    & .container {
+      /* background-color: #fff; */
+      padding-top: 3.2rem;
+      align-items: center;
+    }
+    img {
+      width: 80%;
+      height: auto;
+    }
+  
+    & .product-form {
+      & label {
+        display: block;
+        margin: 2.4rem 0 0.8rem 0;
+        text-transform: capitalize;
+      }
+      & input,
+      textarea  {
+        width: 80%;
+        padding: 0.6rem 0.6rem;
+      }
+  
+      & button {
+        margin-top: 3.2rem;
+      }
+    }
+  }
+  
+  .adminNav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .adminContainer {
+    display: grid;
+    padding-top: 0;
+    grid-template-columns: 1fr 3fr;
+  }
+  
+  .adminList {
+    flex-direction: column;
+    list-style-type: none;
+  }
+  
+  .adminList li {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+  }
+  
+  .showImage {
+      height: 59px;
+      width: 100px;
+      margin-top: 2px;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      /* display: inline-block; */
+  }
+.imagesData{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.crossButton {
+  position: absolute;
+  bottom: 50%;
+  right: 6px;
+  background-color: rgba(255, 0, 0, 0.5); /* Red transparent background */
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%; /* Rounded button */
+  z-index: 1;
+  width: auto;
+}
+
+.crossButton:hover {
+  background-color: rgba(255, 0, 0, 0.8); /* Darker red on hover */
+}

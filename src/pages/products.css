@@ -1,0 +1,57 @@
+.section-productData {
+    & .grid-three-cols {
+      grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+    }
+  }
+h2 {
+    margin-top: 3px;
+  font-size: 30px;
+  font-family:Courier New, monospace
+}
+
+.main-heading {
+  display: flex;
+  justify-content: center;
+}
+
+.Pname
+{
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  border: 1px solid;
+  border-color: aqua;
+  padding-bottom: 4px;
+  cursor: pointer;
+  height: 400px;
+}
+
+.card-images{
+    display: flex;
+    justify-content: center;
+margin-top: 10px;
+}
+.grids {
+    display: grid;
+    gap: auto;
+}
+.grid-two-colss {
+    grid-template-columns: repeat(2, 1fr);
+}
+.card-details{
+    padding-left: 10px ;
+}
+img{
+    height: 250px;
+    width: 300px;
+}
+
+.desc{
+  margin-top: 10px;
+  line-height: 1.5em;
+  height: 3em;      
+  overflow: hidden;
+  
+}

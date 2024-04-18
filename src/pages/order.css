@@ -1,0 +1,60 @@
+.order-detail-container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.order-detail-section {
+  margin-bottom: 20px;
+}
+
+.product-info {
+  display: flex;
+  align-items: center;
+}
+
+.product-image,img {
+  width: 150px;
+  height: 150px;
+  /* background-color: lightgray; */
+  margin-right: 20px;
+}
+
+.product-details {
+  flex: 1;
+}
+
+.user-info textarea {
+  width: 100%;
+  resize: none;
+}
+
+.payment-info label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.payment-info input {
+  width: 100%;
+  padding: 5px;
+}
+
+.pay-order-button {
+  display: block;
+  width: 150px;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pay-order-button:hover {
+  background-color: darkblue;
+}
+
+.error{
+  font-size: 20px;
+  color: red;
+}
