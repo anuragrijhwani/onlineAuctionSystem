@@ -1,253 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import "./productDetails.css";
-// import { useLocation, useNavigate } from "react-router-dom";
-// import { useAuth } from "../store/auth";
-// import { toast } from "react-toastify";
-// import moment from "moment";
-// import io from "socket.io-client";
-
-// export const ProductDetails = () => {
-//   const location = useLocation();
-//   const { user } = useAuth();
-//   const { isLoggedIn } = useAuth();
-//   const navigate = useNavigate();
-//   const { authorizationToken } = useAuth();
-
-//   const [productData, setProductData] = useState("");
-//   const [current_bidding_price, setCurrent_bidding_price] = useState("");
-//   const [bidPrice, setBidPrice] = useState("");
-//   const [bidUser, setBidUser] = useState("");
-//   const [bidUserId, setUserId] = useState("");
-//   const [imgArr, setImgArr] = useState([]);
-//   const [seconds, setSeconds] = useState(10); // Initial countdown time in seconds
-//   const [isActive, setIsActive] = useState(false);
-//   const socket = io("http://localhost:5000");
-//   const getData = async () => {
-//     try {
-//       const Response = await fetch(
-//         "http://localhost:5000/api/data/productDetails",
-//         {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//             Authorization: authorizationToken,
-//           },
-//           body: JSON.stringify({ _id: location?.state?.id }),
-//         }
-//       );
-//       if (Response.ok) {
-//         const data = await Response.json();
-//         console.log("product Data", data);
-//         setProductData(data?.data);
-//         setBidPrice(
-//           data?.data?.current_bidding_price || data?.data?.productPrice
-//         );
-//         setCurrent_bidding_price(data?.data?.current_bidding_price);
-//         setBidUser(data?.data?.current_bidder);
-//         setUserId(data?.data?.user_id);
-//         const proImg = data?.data?.productImages?.split(",");
-//         setImgArr(proImg);
-//         handleImageClick(data?.data?.imagePath + proImg[0]);
-
-//         setTimer(data?.data?.bidStarting_time);
-//       }
-//       console.log(Response);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-// useEffect(() => {
-//   let intervalId;
-
-//   if (isActive && seconds > 0) {
-//     intervalId = setInterval(() => {
-//       setSeconds((prevSeconds) => prevSeconds - 1);
-//     }, 1000);
-//   }
-
-//   return () => clearInterval(intervalId);
-// }, [isActive, seconds]);
-
-//   const deleteProduct = async (id) => {
-//     try {
-//       const response = await fetch(
-//         "http://localhost:5000/api/data/product/delete",
-//         {
-//           method: "POST",
-//           headers: {
-//             "Content-Type": "application/json",
-//             Authorization: authorizationToken,
-//           },
-//           body: JSON.stringify({ _id: id }),
-//         }
-//       );
-//       if (response.ok) {
-//         toast.success("Product successfully deleted");
-//         if (user.isAdmin == true) navigate("/admin/products");
-//         else navigate("/product");
-//       }
-//     } catch (error) {
-//       console.log("error from product detail Page", error);
-//     }
-//   };
-//   const editProduct = () => {
-//     const id = productData?._id;
-//     navigate("/productEdit", { state: { id } });
-//   };
-
-//   useEffect(() => {
-//     socket.on("connect", () => {
-//       console.log("socket connected");
-//     });
-//     socket.on("disconnect", () => {
-//       console.log("socket disConnected");
-//     });
-//     socket.on("bidSendBE", (params) => {
-//       console.log("bid Updated = ", params, location?.state?.id);
-//       if (params?.productId == location?.state?.id) {
-//         console.log("bid Updated In = ", params);
-//         setBidPrice(params?.current_bidding_price);
-//         setBidUser(params?.current_bidder);
-//         setCurrent_bidding_price(params?.current_bidding_price);
-//         setUserId(params?.userId);
-//         setIsActive(true);
-//         if (isActive == true) {
-//           setSeconds(10);
-//         }
-//       }
-//     });
-//   }, []);
-
-//   useEffect(() => {
-//     if (!!location?.state?.id && !!isLoggedIn) getData();
-//     else navigate("/");
-
-//     // const intervalId = setInterval(getData, 5000);
-//     // return () => clearInterval(intervalId);
-//   }, []);
-
-//   const [selectedImage, setSelectedImage] = useState("");
-
-//   const handleImageClick = (imageSrc) => {
-//     setSelectedImage(imageSrc);
-//   };
-//   const onChange = async () => {
-//     let params = {
-//       productId: location?.state?.id,
-//       userId: user._id,
-//       current_bidding_price:
-//         bidPrice == productData?.productPrice &&
-//         bidPrice != current_bidding_price
-//           ? bidPrice
-//           : bidPrice + productData?.product_IncreasePrice,
-//       current_bidder: user.username,
-//     };
-//     socket.emit("bidSendFE", params);
-
-//     return true;
-//     try {
-//       const response = await fetch("http://localhost:5000/api/bidding/create", {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(params),
-//       });
-//       if (response.ok) {
-//         const data = await response.json();
-//         console.log("product Data get", data);
-//         getData();
-//       }
-//     } catch (error) {
-//       console.log("error in get api", error);
-//     }
-//   };
-
-//   return (
-//     <div className="container">
-//       <div className="images-column">
-//         {imgArr?.map((itm, index) => (
-//           <img
-//             key={index}
-//             src={productData?.imagePath + itm}
-//             alt="product images"
-//             className="thumbnail"
-//             onClick={() => handleImageClick(productData?.imagePath + itm)}
-//           />
-//         ))}
-//       </div>
-//       <div className="selected-image-column">
-//         {selectedImage && (
-//           <img
-//             src={selectedImage}
-//             alt="Selected Image"
-//             className="selected-image"
-//           />
-//         )}
-//       </div>
-//       <div className="product-details-column">
-//         {productData && (
-//           <>
-//             <h1>{productData?.productName}</h1>
-//             <p className="userName">
-//               Upload By : {productData?.uploadByUser.username}
-//             </p>
-//             <p className="price">Price : {productData?.productPrice}</p>
-//             <p className="price">
-//               Biding Price : {bidPrice == current_bidding_price ? bidPrice : 0}
-//             </p>
-//             <p>Bidding wil start at : {moment(productData.bidStarting_time).format('MMMM Do YYYY, h:mm:ss a')}</p>
-//             <p className="countDown"></p>
-//             <p>Remaining Time: {seconds}s</p>
-//             <br />
-//             {(user.isAdmin == true ||
-//               user?._id == productData?.product_CreatedBy) && (
-//               <>
-//                 <button className="edit" onClick={editProduct}>
-//                   edit
-//                 </button>
-//                 <button
-//                   className="delete"
-//                   onClick={() => {
-//                     deleteProduct(location?.state?.id);
-//                   }}
-//                 >
-//                   delete
-//                 </button>
-//               </>
-//             )}
-//             {user?._id != productData?.product_CreatedBy &&
-//               !user.isAdmin  && (
-//                 <button
-//                   onClick={() => {
-//                     onChange();
-//                   }}
-//                 >
-//                   {`bid of rs.${
-//                     bidPrice != current_bidding_price
-//                       ? bidPrice
-//                       : bidPrice + productData?.product_IncreasePrice
-//                   }`}
-//                 </button>
-//               )}
-
-//             {bidPrice == current_bidding_price && (
-//               <p className="bidData">{`Bid By : ${
-//                 bidUserId == user._id ? "You" : bidUser
-//               } With Rs.${current_bidding_price} `}</p>
-//             )}
-
-//             <p className="description">
-//               Description : {productData?.productDesc}
-//             </p>
-//           </>
-//         )}
-//       </div>
-//     </div>
-//   );
-// };
-
 import React, { useEffect, useState } from "react";
 import "./productDetails.css";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -262,6 +12,7 @@ export const ProductDetails = () => {
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const { authorizationToken } = useAuth();
+  let timerData = null;
 
   const [productData, setProductData] = useState();
   const [current_bidding_price, setCurrent_bidding_price] = useState("");
@@ -273,6 +24,7 @@ export const ProductDetails = () => {
   const [seconds, setSeconds] = useState(0); // Countdown timer in seconds
   const [isActive, setIsActive] = useState(false);
   const [countdown, setCountdown] = useState({});
+  const [remainingTime, setRemainingTime] = useState(null);
 
   const socket = io("http://localhost:5000");
 
@@ -297,6 +49,7 @@ export const ProductDetails = () => {
           if (updatedSeconds < 1) {
             try {
               clearInterval(intervalId);
+              updateBidStatusAPI();
             } catch (error) {}
           }
           return updatedSeconds;
@@ -304,8 +57,6 @@ export const ProductDetails = () => {
       }, 1000);
 
       return () => clearInterval(intervalId);
-    } else {
-      setIsActive(false);
     }
   }, [isActive]);
 
@@ -324,6 +75,28 @@ export const ProductDetails = () => {
       seconds: remainingSeconds,
     });
   };
+
+  const updateBidStatusAPI = async (bidStatus) => {
+    const bidStatusResponse = await fetch(
+      "http://localhost:5000/api/data/product/bidstatusupdate",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: authorizationToken,
+        },
+        body: JSON.stringify({
+          _id: location?.state?.id,
+          bidStatus: bidStatus,
+        }),
+      }
+    );
+    if (bidStatusResponse.ok) {
+      getData();
+    }
+  };
+
+
 
   const getData = async () => {
     try {
@@ -348,7 +121,7 @@ export const ProductDetails = () => {
         setCurrent_bidding_price(data?.data?.current_bidding_price);
         setBidUser(data?.data?.current_bidder);
         setUserId(data?.data?.user_id);
-        setUpdateTime(data?.data?.updatedDate)
+        setUpdateTime(data?.data?.updatedDate);
         const proImg = data?.data?.productImages?.split(",");
         setImgArr(proImg);
         handleImageClick(data?.data?.imagePath + proImg[0]);
@@ -359,6 +132,8 @@ export const ProductDetails = () => {
         const currentLocalTime = moment();
         if (currentUtcTime.isAfter(currentLocalTime)) {
           setIsActive(true);
+        } else if (data?.data?.bidStatus == "coming") {
+          updateBidStatusAPI("start");
         }
       }
       console.log(Response);
@@ -368,16 +143,28 @@ export const ProductDetails = () => {
   };
 
   useEffect(() => {
-    console.log("time is =>", updateTime);
+    try {
+      clearInterval(timerData);
+    } catch (error) {}
+    if (!!updateTime && productData?.bidStatus == "start") {
+      timerData = setInterval(() => {
+        const now = moment();
+        const Time = moment(updateTime);
+        const diff = now.diff(Time);
+        const remainingTimeInSeconds = moment.duration(diff).asSeconds();
+        if (remainingTimeInSeconds < 60) {
+          const sec = 60 - remainingTimeInSeconds;
+          setRemainingTime(sec);
+        }
+        else{
+          clearInterval(timerData)
+          updateBidStatusAPI("win");
+        }
+      }, 1000);
+    }
+    return () => clearInterval(timerData);
   }, [updateTime]);
 
-  const now = moment();
-  const Time = moment(updateTime);
-  const diff = now.diff(Time);
-  const remainingTimeInSeconds = moment.duration(diff).asSeconds();
-  console.log("seconds",remainingTimeInSeconds);
-
-  console.log("data is here",productData);
   useEffect(() => {
     socket.on("connect", () => {
       console.log("socket connected");
@@ -393,7 +180,7 @@ export const ProductDetails = () => {
         setBidUser(params?.current_bidder);
         setCurrent_bidding_price(params?.current_bidding_price);
         setUserId(params?.userId);
-        setUpdateTime(params?.updatedDate)
+        setUpdateTime(params?.updatedDate);
         if (isActive == true) {
           setSeconds(calculateCountdown());
         }
@@ -507,10 +294,10 @@ export const ProductDetails = () => {
               </p>
               <br />
               <div className="countDown">
-                {countdown.days >= 0 ||
-                countdown.hours >= 0 ||
-                countdown.minutes >= 0 ||
-                countdown.seconds >= 0 ? (
+                {(countdown.days > 0 ||
+                  countdown.hours > 0 ||
+                  countdown.minutes > 0 ||
+                  countdown.seconds > 0) && (
                   <>
                     <h1>Bidding will start in :</h1>
                     <div className="clock-container">
@@ -524,47 +311,52 @@ export const ProductDetails = () => {
                       </div>
                     </div>
                   </>
-                ) : (
-                  <div>
-                    <p>Secondary countdown: s</p>
-                  </div>
                 )}
               </div>
-
+              {productData?.bidStatus == "start" && !!updateTime  &&(
+                <div>
+                  <p>Bidding ends in:{Math.round(remainingTime)} s</p>
+                </div>
+              )}
               <br />
               {(user.isAdmin == true ||
-                user?._id == productData?.product_CreatedBy) && (
-                <>
-                  <button className="edit" onClick={editProduct}>
-                    edit
+                user?._id == productData?.product_CreatedBy) &&
+                productData?.bidStatus == "coming" && (
+                  <>
+                    <button className="edit" onClick={editProduct}>
+                      edit
+                    </button>
+                    <button
+                      className="delete"
+                      onClick={() => {
+                        deleteProduct(location?.state?.id);
+                      }}
+                    >
+                      delete
+                    </button>
+                  </>
+                )}
+              {user?._id != productData?.product_CreatedBy &&
+                !user.isAdmin &&
+                remainingTime >= 0 &&
+                productData?.bidStatus == "start" && (
+                  <button onClick={onChange}>
+                    {`bid of rs.${
+                      bidPrice != current_bidding_price
+                        ? bidPrice
+                        : bidPrice + productData?.product_IncreasePrice
+                    }`}
                   </button>
-                  <button
-                    className="delete"
-                    onClick={() => {
-                      deleteProduct(location?.state?.id);
-                    }}
-                  >
-                    delete
-                  </button>
-                </>
-              )}
-              {user?._id != productData?.product_CreatedBy && !user.isAdmin && (
-                <button
-                  onClick={() => {
-                    onChange();
-                  }}
-                >
-                  {`bid of rs.${
-                    bidPrice != current_bidding_price
-                      ? bidPrice
-                      : bidPrice + productData?.product_IncreasePrice
-                  }`}
-                </button>
-              )}
+                )}
 
-              {bidPrice == current_bidding_price && (
+              {bidPrice == current_bidding_price && productData?.bidStatus == "start" && (
                 <p className="bidData">{`Bid By : ${
                   bidUserId == user._id ? "You" : bidUser
+                } With Rs.${current_bidding_price} `}</p>
+              )}
+
+              { productData?.bidStatus == "win" && (
+                <p className="bidData">{` Bid Win by : ${ bidUser
                 } With Rs.${current_bidding_price} `}</p>
               )}
 

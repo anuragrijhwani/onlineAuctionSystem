@@ -67,7 +67,7 @@ export const WinningProducts = () =>{
                       <td>{itm?.current_bidding_price}</td>
                       <td><button  onClick={()=>{
                         order(itm?._id)
-                      }}> {itm?.bidStatus === "ordered" ? "Order Placed" : "Place Order"}</button></td>
+                      }}> {itm?.bidStatus === "order" ? " View Order" : "Place Order"}</button></td>
                       <td>{itm?.bidStarting_time}</td>
                     </tr>
                   ))}

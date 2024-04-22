@@ -50,12 +50,8 @@ export const Product = () => {
               productDesc,
               productImages,
               productPrice,
-              product_IncreasePrice,
-              product_createDate,
-              product_CreatedBy,
             } = currentElem;
             const proImages = productImages.split(",");
-
 
             return (
               <div className="card" key={index} onClick= {() =>{

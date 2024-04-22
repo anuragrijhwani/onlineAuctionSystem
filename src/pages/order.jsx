@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./order.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
@@ -10,12 +10,35 @@ export const Order = () => {
   const location = useLocation();
   const Navigate = useNavigate();
   const { authorizationToken } = useAuth();
+  const [orderData, setOrderData] = useState();
   const [product, setProduct] = useState({
     productName: "",
     productPrice: "",
     currentBiddingPrice: "",
     productDesc: "",
   });
+
+  const getOrder = async () => {
+    try {
+      const getOrder = await fetch(
+        "http://localhost:5000/api/order/data",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: authorizationToken,
+          },
+          body: JSON.stringify({ _id: location?.state?.id }),
+        }
+      );
+      if (getOrder.ok) {
+        const data = await getOrder.json();
+        setOrderData(data?.data)
+      }
+    } catch (error) {
+      console.log("error in fetching data",error);
+    }
+  };
 
   const getData = async () => {
     try {
@@ -33,6 +56,10 @@ export const Order = () => {
       if (Response.ok) {
         const data = await Response.json();
         setProduct(data?.data);
+
+        if (data?.data?.bidStatus == "order") {
+          getOrder();
+        }
       }
     } catch (error) {
       console.log(error);
@@ -43,14 +70,13 @@ export const Order = () => {
     getData();
   }, []);
 
-
   const handleOrderSubmit = async (values) => {
     const params = {
       product_id: product?._id,
       user_id: product?.bidBy_user_id,
       address: values.address,
       payment_data: values.upiId,
-      status:"ordered"
+      status: "order",
     };
 
     try {
@@ -63,8 +89,8 @@ export const Order = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        toast.success("Order Placed Successfully")
-        Navigate('/account/winner');
+        toast.success("Order Placed Successfully");
+        Navigate("/account/winner");
       }
     } catch (error) {
       console.log("error in sending data", error);
@@ -115,44 +141,63 @@ export const Order = () => {
             </div>
           </div>
 
-          {/* Second Section */}
-          <div className="order-detail-section">
-            <div className="user-info">
-              <label htmlFor="address">Address</label>
-              <Field
-                id="address"
-                name="address"
-                as="textarea"
-                rows="4"
-                cols="50"
-              />
-              <ErrorMessage name="address" component="div" className="error" />
+          {product?.bidStatus !== "order" ? (
+            // Second Section
+            <div className="order-detail-section">
+              <div className="user-info">
+                <label htmlFor="address">Address</label>
+                <Field
+                  id="address"
+                  name="address"
+                  as="textarea"
+                  rows="4"
+                  cols="50"
+                />
+                <ErrorMessage
+                  name="address"
+                  component="div"
+                  className="error"
+                />
+              </div>
             </div>
-          </div>
-
-          {/* Third Section */}
-          <div className="order-detail-section">
-            <div className="payment-info">
-              <h2>Payment</h2>
-              <label htmlFor="upiId">UPI ID</label>
-              <Field
-                type="text"
-                id="upiId"
-                name="upiId"
-                autoComplete="off"
-              />
-              <ErrorMessage name="upiId" component="div" className="error" />
+          ) : (
+            <div className="order-detail-section">
+              <div className="user-info">
+                <h2>User Detail</h2>
+                <p>Address : {orderData?.address}</p>
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Pay & Order Button */}
-          <button
-            type="submit"
-            className="pay-order-button"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Submitting..." : "Pay & Order"}
-          </button>
+          {product?.bidStatus !== "order" ? (
+            // Third Section
+            <div className="order-detail-section">
+              <div className="payment-info">
+                <h2>Payment</h2>
+                <label htmlFor="upiId">UPI ID</label>
+                <Field type="text" id="upiId" name="upiId" autoComplete="off" />
+                <ErrorMessage name="upiId" component="div" className="error" />
+              </div>
+            </div>
+          ) : (
+            <div className="order-detail-section">
+              <div className="payment-info">
+                <h2>Payment Data</h2>
+                <p>UPI ID : {orderData?.payment_data} </p>
+              </div>
+            </div>
+          )}
+
+          {product?.bidStatus !== "order" && (
+            // Pay & Order Button
+            <button
+              type="submit"
+              className="pay-order-button"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Pay & Order"}
+            </button>
+          )}
         </Form>
       )}
     </Formik>
