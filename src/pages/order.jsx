@@ -10,6 +10,7 @@ export const Order = () => {
   const location = useLocation();
   const Navigate = useNavigate();
   const { authorizationToken } = useAuth();
+  const { user } = useAuth();
   const [orderData, setOrderData] = useState();
   const [product, setProduct] = useState({
     productName: "",
@@ -164,6 +165,7 @@ export const Order = () => {
             <div className="order-detail-section">
               <div className="user-info">
                 <h2>User Detail</h2>
+                {user?.isAdmin == "true" && <p>User Name : {product?.current_bidder} </p>}
                 <p>Address : {orderData?.address}</p>
               </div>
             </div>

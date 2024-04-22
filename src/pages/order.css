@@ -9,10 +9,11 @@
 
 .product-info {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .product-image img {
+  margin-top: 12px;
   width: 150px;
   height: 150px;
   /* background-color: lightgray; */

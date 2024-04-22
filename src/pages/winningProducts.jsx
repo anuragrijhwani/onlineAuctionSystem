@@ -55,7 +55,6 @@ export const WinningProducts = () =>{
                     <th>Original Product Price</th>
                     <th>Your Bid Price</th>
                     <th>Order</th>
-                    <th>remaining Time</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -68,7 +67,6 @@ export const WinningProducts = () =>{
                       <td><button  onClick={()=>{
                         order(itm?._id)
                       }}> {itm?.bidStatus === "order" ? " View Order" : "Place Order"}</button></td>
-                      <td>{itm?.bidStarting_time}</td>
                     </tr>
                   ))}
                 </tbody>
