@@ -1,6 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
-import { FaMessage } from "react-icons/fa6";
 import { FaRectangleList } from "react-icons/fa6";
 import { RiFileList3Fill } from "react-icons/ri";
 
@@ -17,7 +16,7 @@ export const Account = () =>{
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/product">
+                    <NavLink to="/account/products">
                       <FaRectangleList color='rgb(0, 255, 255)' /> My Products
                     </NavLink>
                   </li>

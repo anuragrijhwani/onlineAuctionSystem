@@ -165,7 +165,7 @@ export const Order = () => {
             <div className="order-detail-section">
               <div className="user-info">
                 <h2>User Detail</h2>
-                {user?.isAdmin == "true" && <p>User Name : {product?.current_bidder} </p>}
+                 <p>User Name : {product?.current_bidder} </p>
                 <p>Address : {orderData?.address}</p>
               </div>
             </div>

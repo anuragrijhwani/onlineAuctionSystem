@@ -55,3 +55,7 @@ img{
   overflow: hidden;
   
 }
+
+.no-products-message h2{
+  text-align: center;
+}

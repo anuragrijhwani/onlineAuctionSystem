@@ -152,6 +152,7 @@ export const AddProduct = () => {
                   <div className="imagesData">
                     {!!product?.productImagesFile &&
                       product?.productImagesFile?.map((itm, index) => (
+                        console.log(itm),
                         <div className="showImage" key={index}>
                           <button
                             type="button"

@@ -22,7 +22,8 @@ import { WinningProducts } from "./pages/winningProducts";
 import { Order } from "./pages/order";
 
 import ProductEditPage from "./pages/productEdit";
-
+import { AdminOrder } from "./pages/adminOrder";
+import { MyProducts } from "./pages/userProduct";
 
 const app = () => {
   return (
@@ -40,24 +41,20 @@ const app = () => {
         <Route path="/productDetails" element={<ProductDetails />} />
         <Route path="/productEdit" element={<ProductEditPage />} />
         <Route path="/order" element={<Order />} />
-        <Route path="/account" element={<Account />} >
-          <Route path="profile" element={<Profile />}/>
+        <Route path="/account" element={<Account />}>
+          <Route path="profile" element={<Profile />} />
           <Route path="bids" element={<MyBids />} />
           <Route path="winner" element={<WinningProducts />} />
-          {/* <Route path="products" element={MyProducts} />
-           */}
+          <Route path="products" element={<MyProducts />} />
+          
         </Route>
         <Route path="/admin" element={<AdminLayout />}>
-          
           <Route path="user" element={<AdminUser />} />
-          <Route path="user/update" element={<AdminUserUpdate/>} />
+          <Route path="user/update" element={<AdminUserUpdate />} />
           <Route path="contact" element={<AdminContact />} />
-          <Route path="products" element={<AdminProduct/>} />
-          
-
-        
+          <Route path="products" element={<AdminProduct />} />
+          <Route path="order" element={<AdminOrder />} />
         </Route>
-        
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -1,0 +1,42 @@
+table{
+    background: #fff;
+    box-shadow: rgba(255, 255, 255, 0.2);
+    border-collapse: collapse;
+    border-radius: 1rem;
+}
+
+.admin tr{
+    display: grid;
+    grid-template-columns: repeat(6,minmax(0rem,1fr));
+    align-items: center;
+    box-shadow: 0 0.3rem 0 gray;
+    margin-bottom: 10px;
+    border-bottom: 4px solid transparent ;
+    color: var(--bg-color);
+}
+
+th{
+    font-size: 1.7rem;
+    letter-spacing: 0.1rem;
+    color: var(--dark-color);
+    box-shadow: 0 0.3 0 gray;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+}
+
+td{
+    font-size: 1.7rem;
+    letter-spacing: 0.1rem;
+    padding: 1rem;
+    text-align: center;
+    color: var(--dark-color);
+}
+
+.admin img {
+    height: 60px;
+    width: 60px;
+}
+.admin button{
+    width: 150px;
+}
