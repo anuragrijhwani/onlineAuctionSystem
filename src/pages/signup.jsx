@@ -19,7 +19,6 @@ export const SignUp = () => {
       phone: e.phone,
       password: e.password,
     };
-    console.log(params);
     try {
       const response = await fetch(
         `http://localhost:5000/api/auth/registration`,
@@ -31,11 +30,9 @@ export const SignUp = () => {
           body: JSON.stringify(params),
         }
       );
-      console.log(response);
 
       const data = await response.json();
       if (response.ok) {
-        console.log(data.Token);
         storeToken(data.Token);
         action.resetForm()
         toast.success("Registration Successful")

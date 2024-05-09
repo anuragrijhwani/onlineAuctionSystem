@@ -20,7 +20,6 @@ export const WinningProducts = () =>{
                 
                 if(response.ok) {
                     const data = await response.json();
-                    console.log(data?.data);
                     setWinner(data?.data); 
                 } else {
                     console.log("No Data available");

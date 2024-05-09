@@ -31,7 +31,6 @@ const ChangePasswordForm = () => {
         },
         body: JSON.stringify({ token, newPassword: values.newPassword }),
       });
-      console.log(response);
 
       if (response.ok) {
         toast.success("Password Changed Successfully");

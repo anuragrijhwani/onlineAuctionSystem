@@ -16,7 +16,6 @@ const ForgotPasswordForm = () => {
   });
 
   const handleSubmit = async (values, { setSubmitting, setFieldError }) => {
-    console.log('Submitted email:', values.email);
 
     try {
         const Response = await fetch("http://localhost:5000/api/auth/user/forgotPassword", {
@@ -32,7 +31,6 @@ const ForgotPasswordForm = () => {
         } else {
           setFieldError("email",data.message,false)
         }
-        console.log(Response);
         
       } catch (error) {
         console.log(error);

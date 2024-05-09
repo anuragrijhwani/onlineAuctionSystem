@@ -35,7 +35,6 @@ export const AuthProvider = ({ children }) => {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log("user Data is =>", data.userData);
         setuser(data.userData);
       }
     } catch (error) {

@@ -36,7 +36,6 @@ export const ContactUs = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(contact);
     try {
       const response = await fetch("http://localhost:5000/api/form/contact", {
         method: "POST",

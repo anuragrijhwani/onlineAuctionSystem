@@ -24,7 +24,6 @@ export const Profile = () => {
           );
           if (Response.ok) {
             const data = await Response.json();
-            console.log(data);
             formik.setFieldValue("username",data?.data?.username);
             formik.setFieldValue("email",data?.data?.email);
             formik.setFieldValue("phone",data?.data?.phone)
@@ -88,7 +87,6 @@ export const Profile = () => {
         oldPassword:e.oldPassword,
         newPassword:e.newPassword
       };
-      console.log(params);
       try {
         const response = await fetch(
           `http://localhost:5000/api/auth/user/password`,

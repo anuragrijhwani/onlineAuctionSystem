@@ -16,7 +16,6 @@ export const AdminContact = () => {
     
           if (response.ok) {
             const data = await response.json();
-            console.log(data);
             setContactData(data?.data);
           }
         } catch (error) {

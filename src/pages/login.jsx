@@ -20,7 +20,6 @@ export const Login = () => {
       if (Response.ok) {
 
           const data = await Response.json();
-          console.log("res from server", data);
           //storing token in local storage
           storeToken(data.Token);
           toast.success("Login SuccessFul");
@@ -35,7 +34,6 @@ export const Login = () => {
       } else {
         toast.error("email or password is invalid");
       }
-      console.log(Response);
     } catch (error) {
       console.log(error);
     }
