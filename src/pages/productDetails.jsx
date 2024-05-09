@@ -46,7 +46,6 @@ export const ProductDetails = () => {
         setSeconds((prevSeconds) => {
           const updatedSeconds = prevSeconds - 1;
           updateCountdown(updatedSeconds);
-          // console.log(updatedSeconds);
           if (updatedSeconds < 1) {
             try {
               clearInterval(intervalId);
@@ -111,7 +110,6 @@ export const ProductDetails = () => {
       );
       if (biddingData) {
         const data = await biddingData.json();
-        console.log("bidding data", data);
         setBidding(data?.biddingData);
       }
     } catch (error) {
@@ -121,7 +119,6 @@ export const ProductDetails = () => {
 
   useEffect(() => {
     bidData();
-    console.log("dttatata",bidding);
   }, [user]);
 
   const getData = async () => {
@@ -139,7 +136,6 @@ export const ProductDetails = () => {
       );
       if (Response.ok) {
         const data = await Response.json();
-        console.log("product Data", data);
         setProductData(data?.data);
         setBidPrice(
           data?.data?.current_bidding_price || data?.data?.productPrice
@@ -162,7 +158,6 @@ export const ProductDetails = () => {
           updateBidStatusAPI("start");
         }
       }
-      console.log(Response);
     } catch (error) {
       console.log(error);
     }
@@ -198,9 +193,7 @@ export const ProductDetails = () => {
       console.log("socket disConnected");
     });
     socket.on("bidSendBE", (params) => {
-      console.log("bid Updated = ", params, location?.state?.id);
       if (params?.productId == location?.state?.id) {
-        console.log("bid Updated In = ", params);
         setBidPrice(params?.current_bidding_price);
         setBidUser(params?.current_bidder);
         setCurrent_bidding_price(params?.current_bidding_price);
@@ -393,7 +386,7 @@ export const ProductDetails = () => {
           )}
         </div>
       </div>
-      {user.isAdmin === true || user?._id === productData?.product_CreatedBy && (
+      {user.isAdmin == true || user?._id === productData?.product_CreatedBy && (
         <div>
           <section className="bidding-section">
             <div className="container">
