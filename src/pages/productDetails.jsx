@@ -50,7 +50,7 @@ export const ProductDetails = () => {
           if (updatedSeconds < 1) {
             try {
               clearInterval(intervalId);
-              updateBidStatusAPI();
+              updateBidStatusAPI("start");
             } catch (error) {}
           }
           return updatedSeconds;
