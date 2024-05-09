@@ -29,7 +29,7 @@ export const AdminContact = () => {
         <>
           <section className="admin-contact-section">
             <div className="container">
-              <h1>Admin Users Data</h1>
+              <h1>Contact Us Data</h1>
             </div>
             <div className="container admin-contact">
               <table>

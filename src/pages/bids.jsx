@@ -53,7 +53,7 @@ export const MyBids = () => {
                 <tbody>
                   {bid.map((itm, index) => (
                     <tr key={index}>
-                      <td><img src={"http://localhost:5000/uploads/"+itm.productInfo.productImages.split(',')[0]} alt="Product" /></td>
+                      <td><img src={"http://localhost:5000/uploads/"+itm.productInfo?.productImages.split(',')[0]} alt="Product" /></td>
                       <td>{itm?.productInfo?.productName}</td>
                       <td>{itm?.productInfo?.productPrice}</td>
                       <td>{itm?.current_bidding_price}</td>

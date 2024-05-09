@@ -1,16 +1,15 @@
 import "./profile.css";
-import {useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { toast } from 'react-toastify';
 import { useAuth } from "../store/auth";
-import { useEffect} from "react";
+import { useEffect, useState} from "react";
 import { AdminUpdateSchema } from "../validation/adminUpdate-validation.jsx";
 import { passwordSchema } from "../validation/passwordUpdate-vaidation.jsx";
 
 
 export const Profile = () => {
-    const Navigate = useNavigate();
     const { authorizationToken,user } = useAuth();
+    const [token, setToken] = useState(localStorage.getItem("Token"));
 
     const ProfileData = async () => {
         const Response = await fetch(
@@ -20,7 +19,7 @@ export const Profile = () => {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify( {_id:user?._id} ),
+              body: JSON.stringify( { _id:user?._id} ),
             }
           );
           if (Response.ok) {
@@ -33,9 +32,12 @@ export const Profile = () => {
         else
         console.error("Show  error")
     }
-    useEffect(()=>{
+
+    useEffect(() => {
+      if (!!user?._id || !!token) {
         ProfileData();
-    },[])
+      };
+    }, [user]);
 
     const handleSubmit1 = async (e) => {
       const params = {
@@ -60,7 +62,6 @@ export const Profile = () => {
         const data = await response.json();
         if (response.ok) {
           toast.success("User Update Successful");
-          // Navigate("/admin/user");
         }
         else{
           formik.setFieldError("email",data.message,false)

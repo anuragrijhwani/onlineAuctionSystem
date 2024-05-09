@@ -144,7 +144,7 @@ export const AdminUserUpdate = () => {
                       </div>
                       <br />
                       <button type="submit" className="btn btn-submit">
-                        Submit
+                        Update
                       </button>
                     </form>
                   </div>

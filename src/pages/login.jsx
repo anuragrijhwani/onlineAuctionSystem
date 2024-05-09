@@ -2,7 +2,7 @@ import "./login.css";
 import { useAuth } from "../store/auth";
 import { useFormik } from "formik";
 import { loginSchema } from "../validation/login-validation.jsx";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 export const Login = () => {
 
@@ -23,9 +23,15 @@ export const Login = () => {
           console.log("res from server", data);
           //storing token in local storage
           storeToken(data.Token);
-          toast.success("Login SuccessFull");
+          toast.success("Login SuccessFul");
           formik.resetForm();
-          Navigate("/");
+          if(data?.data?.isAdmin == true)
+          {
+            Navigate("/admin/user");
+          }
+          else{
+            Navigate("/");
+          }
       } else {
         toast.error("email or password is invalid");
       }
@@ -95,6 +101,9 @@ export const Login = () => {
                   <button type="submit" className="btn btn-submit">
                     Submit
                   </button>
+                  <br />
+                  <br />
+                  <Link className="forgotPassword" to="/forgotPassword"> Forgot Password </Link>
                 </form>
               </div>
             </div>

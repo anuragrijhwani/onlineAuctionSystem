@@ -24,6 +24,8 @@ import { Order } from "./pages/order";
 import ProductEditPage from "./pages/productEdit";
 import { AdminOrder } from "./pages/adminOrder";
 import { MyProducts } from "./pages/userProduct";
+import ForgotPasswordForm from "./pages/forgotPassword";
+import ChangePasswordForm from "./pages/changePassword";
 
 const app = () => {
   return (
@@ -41,6 +43,8 @@ const app = () => {
         <Route path="/productDetails" element={<ProductDetails />} />
         <Route path="/productEdit" element={<ProductEditPage />} />
         <Route path="/order" element={<Order />} />
+        <Route path="/forgotPassword" element={<ForgotPasswordForm />} />
+        <Route path="/changePassword/:token" element={<ChangePasswordForm />} />
         <Route path="/account" element={<Account />}>
           <Route path="profile" element={<Profile />} />
           <Route path="bids" element={<MyBids />} />

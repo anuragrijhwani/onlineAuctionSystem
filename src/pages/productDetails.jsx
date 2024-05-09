@@ -21,6 +21,7 @@ export const ProductDetails = () => {
   const [bidUserId, setUserId] = useState("");
   const [updateTime, setUpdateTime] = useState("");
   const [imgArr, setImgArr] = useState([]);
+  const [bidding, setBidding] = useState([]);
   const [seconds, setSeconds] = useState(0); // Countdown timer in seconds
   const [isActive, setIsActive] = useState(false);
   const [countdown, setCountdown] = useState({});
@@ -96,7 +97,32 @@ export const ProductDetails = () => {
     }
   };
 
+  const bidData = async () => {
+    try {
+      const biddingData = await fetch(
+        "http://localhost:5000/api/admin/bidding/data",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ productId: location?.state?.id }),
+        }
+      );
+      if (biddingData) {
+        const data = await biddingData.json();
+        console.log("bidding data", data);
+        setBidding(data?.biddingData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
+    bidData();
+    console.log("dttatata",bidding);
+  }, [user]);
 
   const getData = async () => {
     try {
@@ -155,9 +181,8 @@ export const ProductDetails = () => {
         if (remainingTimeInSeconds < 60) {
           const sec = 60 - remainingTimeInSeconds;
           setRemainingTime(sec);
-        }
-        else{
-          clearInterval(timerData)
+        } else {
+          clearInterval(timerData);
           updateBidStatusAPI("win");
         }
       }, 1000);
@@ -237,6 +262,7 @@ export const ProductDetails = () => {
       current_bidder: user.username,
     };
     socket.emit("bidSendFE", params);
+    bidData();
 
     return true;
     try {
@@ -313,7 +339,7 @@ export const ProductDetails = () => {
                   </>
                 )}
               </div>
-              {productData?.bidStatus == "start" && !!updateTime  &&(
+              {productData?.bidStatus == "start" && !!updateTime && (
                 <div>
                   <p>Bidding ends in:{Math.round(remainingTime)} s</p>
                 </div>
@@ -349,15 +375,15 @@ export const ProductDetails = () => {
                   </button>
                 )}
 
-              {bidPrice == current_bidding_price && productData?.bidStatus == "start" && (
-                <p className="bidData">{`Bid By : ${
-                  bidUserId == user._id ? "You" : bidUser
-                } With Rs.${current_bidding_price} `}</p>
-              )}
+              {bidPrice == current_bidding_price &&
+                productData?.bidStatus == "start" && (
+                  <p className="bidData">{`Bid By : ${
+                    bidUserId == user._id ? "You" : bidUser
+                  } With Rs.${current_bidding_price} `}</p>
+                )}
 
-              { productData?.bidStatus == "win" && (
-                <p className="bidData">{` Bid Win by : ${ bidUser
-                } With Rs.${current_bidding_price} `}</p>
+              {productData?.bidStatus == "win" && (
+                <p className="bidData">{` Bid Win by : ${bidUser} With Rs.${current_bidding_price} `}</p>
               )}
 
               <p className="description">
@@ -367,6 +393,39 @@ export const ProductDetails = () => {
           )}
         </div>
       </div>
+      {user.isAdmin === true || user?._id === productData?.product_CreatedBy && (
+        <div>
+          <section className="bidding-section">
+            <div className="container">
+              <h1>Bidding Data</h1>
+            </div>
+            <div className="container bidding">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Index Number</th>
+                    <th>Product Name</th>
+                    <th>Original Product Price</th>
+                    <th>Your Bid Price</th>
+                    <th>Bidder Name</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {bidding?.map((item, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{productData?.productName}</td>
+                      <td>{productData?.productPrice}</td>
+                      <td>{item?.current_bidding_price}</td>
+                      <td>{item?.productInfo?.username}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      )}
     </>
   );
 };

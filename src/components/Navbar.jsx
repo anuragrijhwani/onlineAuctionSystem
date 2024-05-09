@@ -10,7 +10,7 @@ export const Navbar = () => {
     <header>
       <div className="Container">
         <div className="logo-brand">
-          <a href="/">BidLunchPad</a>
+          <a href="/">BidLaunchPad</a>
         </div>
         <nav>
           <ul>

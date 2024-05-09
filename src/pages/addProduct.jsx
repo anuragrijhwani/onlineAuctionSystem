@@ -13,7 +13,7 @@ export const AddProduct = () => {
     productImagesFile: [],
     productPrice: "",
     product_IncreasePrice: "",
-    product_CreatedBy: user._id,
+    product_CreatedBy: "",
     bidStarting_time: "",
   });
 
@@ -22,11 +22,11 @@ export const AddProduct = () => {
     let value = e.target.value;
     if (
       (name == "productPrice" || name == "product_IncreasePrice") &&
-      value < 1
+      value < 0
     ) {
       setProduct({
         ...product,
-        [name]: 1,
+        [name]: "",
       });
     } else if (name == "productImages") {
       // console.log("front data",e.target);
@@ -152,7 +152,6 @@ export const AddProduct = () => {
                   <div className="imagesData">
                     {!!product?.productImagesFile &&
                       product?.productImagesFile?.map((itm, index) => (
-                        console.log(itm),
                         <div className="showImage" key={index}>
                           <button
                             type="button"

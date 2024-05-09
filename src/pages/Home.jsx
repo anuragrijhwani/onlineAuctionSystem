@@ -62,14 +62,14 @@ export const Home = () => {
           <div className="container grid grid-two-cols">
             <div className="hero-content">
               <div className="mainName">
-                <h2>Welcome to BidLunchPad</h2>
+                <h2>Welcome to BidLaunchPad</h2>
               </div>
-              <p>Welcome to BidLunchPad, where your bidding journey begins.</p>
+              <p>Welcome to BidLaunchPad, where your bidding journey begins.</p>
               <p>
                 Your premier destination for online auctions that revolutionize
-                the bidding experience. With BidLunchPad, bidding isn't just
+                the bidding experience. With BidLaunchPad, bidding isn't just
                 about securing an item, it's about embarking on an exhilarating
-                journey where every bid counts. Join us at BidLunchPad and
+                journey where every bid counts. Join us at BidLaunchPad and
                 discover a world where every bid unlocks endless possibilities.
               </p>
 
