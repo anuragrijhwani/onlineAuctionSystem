@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./contactus.css";
 import { useAuth } from "../store/auth";
+import { toast } from "react-toastify";
 
 export const ContactUs = () => {
   const [contact, setContact] = useState({
@@ -47,7 +48,9 @@ export const ContactUs = () => {
       // console.log(response);
 
       if (response.ok) {
-        setContact({ username: "", email: "", message: "" });
+        setContact({ message: "" });
+        toast.success("Product Added Successfully");
+        // window.location.reload();
       }
     } catch (error) {
       console.log(error);

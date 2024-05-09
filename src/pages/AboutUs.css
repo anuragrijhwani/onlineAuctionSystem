@@ -1,0 +1,17 @@
+.about-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Georgia, serif;
+}
+
+.about-container h1 {
+  font-size: 3.5rem;
+  text-align: center;
+}
+
+.about-container p {
+  font-size: 1.4rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}

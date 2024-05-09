@@ -31,24 +31,25 @@ export const Home = () => {
   }, []);
 
   // Auto slide function
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      nextSlide();
-    }, 5000);
-    return () => clearInterval(intervalId);
-  }, [currentIndex]);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     nextSlide();
+  //     prevSlide();
+  //   }, 5000);
+  //   return () => clearInterval(intervalId);
+  // }, [currentIndex]);
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === images.length - 1 ? 0 : prevIndex + 1
-    );
-  };
+  // const nextSlide = () => {
+  //   setCurrentIndex((prevIndex) =>
+  //     prevIndex === images.length - 1 ? 0 : prevIndex + 1
+  //   );
+  // };
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
-    );
-  };
+  // const prevSlide = () => {
+  //   setCurrentIndex((prevIndex) =>
+  //     prevIndex === 0 ? images.length - 1 : prevIndex - 1
+  //   );
+  // };
 
   const navigate = useNavigate();
   const sendData = (id) => {
@@ -97,17 +98,15 @@ export const Home = () => {
         </section>
         <section className="Section-hero">
           <div className="container grid grid-two-cols">
-            {/* Hero content */}
+
           </div>
         </section>
         <section>
           <h1>current Product</h1>
           <div className="productData">
-            {/* Product slider */}
             <div className="slider-container">
               <div
                 className="slider"
-                style={{ transform: `translateX(-${currentIndex * 310}px)` }}
               >
                 {images.map((item, index) => (
                   <div
@@ -118,7 +117,7 @@ export const Home = () => {
                     }}
                   >
                     <div className="card-images">
-                      {item.productImages.length > 0 && (
+                      {item.productImages.length > 0 && item.productImages.length > 4 &&(
                         <img
                           src={
                             item.imagePath + item.productImages.split(",")[0]
