@@ -22,27 +22,27 @@ jobs:
       run: |
         rm -rf node_modules
         rm -f package-lock.json
-    
-    - name: Install dependencies
-      run: npm install
-    
-    - name: Generate package-lock.json
-      run: npm install --package-lock-only
-    
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     
-    - name: Install dependencies using npm ci
+    - name: Install dependencies
       run: npm ci
     
     - name: Build the project
       run: npm run build --if-present
     
+    - name: Run tests
+      run: npm test
     
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         folder: build # The folder the action should deploy.
+
+    - name: Print npm debug log if exists
+      if: failure()
+      run: cat /home/runner/.npm/_logs/*-debug.log
