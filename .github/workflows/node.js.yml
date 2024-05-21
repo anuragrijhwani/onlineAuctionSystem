@@ -17,14 +17,32 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
+    - name: Clean node_modules and package-lock.json
+      run: |
+        rm -rf node_modules
+        rm -f package-lock.json
+    
+    - name: Install dependencies
+      run: npm install
+    
+    - name: Generate package-lock.json
+      run: npm install --package-lock-only
+    
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    
+    - name: Install dependencies using npm ci
+      run: npm ci
+    
+    - name: Build the project
+      run: npm run build --if-present
+    
+    - name: Run tests
+      run: npm test
     
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@v4
